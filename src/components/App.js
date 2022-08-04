@@ -2,14 +2,12 @@ import Header from "./Header.js"
 import Main from "./Main.js"
 import Footer from "./Footer.js"
 
-function handleEditAvatarClick(){
-  return ""
-}
+
 
 
 function App() {
   return (
-    <body className="page">
+    <div className="page">
       <Header />
       <Main />
       <Footer />
@@ -30,7 +28,7 @@ function App() {
         </article>
       </template>
       <script type="module" src="./pages/index.js"></script>
-    </body>
+    </div>
   );
 }
 
