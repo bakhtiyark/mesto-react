@@ -1,3 +1,7 @@
+import React from "react"
+import Api from "../utils/Api.js"
+import Card from "./Card.js"
+
 const handleEditAvatarClick = () => {
   document.querySelector("#replace_avatar").classList.add("popup_opened")
 }
@@ -10,6 +14,7 @@ const handleAddPlaceClick = () => {
 
 
 function Main() {
+  
   return (
     <main>
       <section className="profile">
