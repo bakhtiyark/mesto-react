@@ -1,7 +1,7 @@
 import React from "react"
-import Api from "../utils/Api.js"
+import { api } from "../utils/Api.js"
 import Card from "./Card.js"
-
+/*
 const handleEditAvatarClick = () => {
   document.querySelector("#replace_avatar").classList.add("popup_opened")
 }
@@ -10,45 +10,28 @@ const handleProfileClick = () => {
 }
 const handleAddPlaceClick = () => {
   document.querySelector("#add_place").classList.add("popup_opened")
-}
+}*/
 
 
 function Main() {
-  
+  React.useEffect(() => {
+    api.getInitialCards().then((data) => {
+      setcards(data);
+    });
+  }, []);
+
+  //Пользователь
+  const [username, setUsername] = React.useState(["Test"])
+  const [avatar, setAvatar] = React.useState([null])
+  const [occupation, setOccupation] = React.useState(["Penguin uprighter"])
+
+  //Карты
+  const [cards, setcards] = React.useState([])
+
+
   return (
     <main>
       <section className="profile">
-        <div id="profile__popup" className="popup">
-          <div className="popup__container">
-            <h2 className="popup__title">Редактировать профиль</h2>
-            <form className="popup__form" id="profile-edit" name="profile-edit" noValidate>
-              <input id="profile-name-input" className="popup__input popup__input_profile_name" type="text"
-                name="profileFormName" minLength="2" maxLength="40" required />
-              <span className="profile-name-input-error"></span>
-              <input id="profile-secondary-input" className="popup__input popup__input_profile_secondary"
-                type="text" name="profileFormSecondary" minLength="2" maxLength="200" required />
-              <span className="profile-secondary-input-error"></span>
-              <button type="submit" className="popup__save-button">Сохранить</button>
-            </form>
-            <button type="button" className="popup__close popup__close-icon" id="profile-close-button"></button>
-          </div>
-        </div>
-
-        <div className="popup replace_avatar" id="replace_avatar">
-          <div className="popup__container popup__container_avatar">
-            <button className="popup__close-icon popup__close" type="button" id="avatar-close-button"
-              name="avatar-close"></button>
-            <h2 className="popup__label">Обновить Аватар</h2>
-            <form className="popup__form" id="avatar-add" name="avatar-add" method="get" noValidate>
-              <div className="popup__input-wrapper">
-                <input type="url" required className="popup__input popup__input_link" id="avatar-input"
-                  name="link" placeholder="Ссылка на картинку" />
-                <span className="avatar-input-error"></span>
-              </div>
-              <button type="submit" className="popup__save-button">Сохранить</button>
-            </form>
-          </div>
-        </div>
         <div className="profile__card">
           <div className="profile__avatar-container">
             <img className="profile__avatar" alt="Аватар" />
@@ -106,6 +89,39 @@ function Main() {
           <p className="popup__place-name"></p>
         </div>
       </div>
+
+      <div id="profile__popup" className="popup">
+        <div className="popup__container">
+          <h2 className="popup__title">Редактировать профиль</h2>
+          <form className="popup__form" id="profile-edit" name="profile-edit" noValidate>
+            <input id="profile-name-input" className="popup__input popup__input_profile_name" type="text"
+              name="profileFormName" minLength="2" maxLength="40" required />
+            <span className="profile-name-input-error"></span>
+            <input id="profile-secondary-input" className="popup__input popup__input_profile_secondary"
+              type="text" name="profileFormSecondary" minLength="2" maxLength="200" required />
+            <span className="profile-secondary-input-error"></span>
+            <button type="submit" className="popup__save-button">Сохранить</button>
+          </form>
+          <button type="button" className="popup__close popup__close-icon" id="profile-close-button"></button>
+        </div>
+      </div>
+
+      <div className="popup replace_avatar" id="replace_avatar">
+        <div className="popup__container popup__container_avatar">
+          <button className="popup__close-icon popup__close" type="button" id="avatar-close-button"
+            name="avatar-close"></button>
+          <h2 className="popup__label">Обновить Аватар</h2>
+          <form className="popup__form" id="avatar-add" name="avatar-add" method="get" noValidate>
+            <div className="popup__input-wrapper">
+              <input type="url" required className="popup__input popup__input_link" id="avatar-input"
+                name="link" placeholder="Ссылка на картинку" />
+              <span className="avatar-input-error"></span>
+            </div>
+            <button type="submit" className="popup__save-button">Сохранить</button>
+          </form>
+        </div>
+      </div>
+
     </main>
   )
 }

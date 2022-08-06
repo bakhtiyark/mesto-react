@@ -97,3 +97,11 @@ export class Api {
     }).then(this._errorCheck).catch(err => console.log(err))
   }
 }
+
+export const api = new Api({
+  baseUrl:'https://mesto.nomoreparties.co/v1/cohort-45',
+  token: {
+    authorization: "c4df37c2-ee37-468d-b548-ff18699e058a",
+    'Content-Type': 'application/json'
+  }
+})
