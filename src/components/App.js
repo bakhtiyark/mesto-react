@@ -26,11 +26,11 @@ function App() {
     setAvatarPopupOpen(false)
     setAddPlacePopupOpen(false)
     setProfilePopupOpen(false)
-    setSelectedCard(false)
+    setSelectedCard({})
     console.log("lala")
   }
   //Карты
-  const [selectedCard, setSelectedCard] = React.useState([])
+  const [selectedCard, setSelectedCard] = React.useState({})
   function openCardPopup(card) {
     setSelectedCard({ src: card.link, alt: card.name, opened: true });
   }

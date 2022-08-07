@@ -4,29 +4,14 @@ import Card from "./Card.js"
 
 export default function Main(props) {
 
-  const handleEditAvatarClick = () => {
-    document.querySelector("#replace_avatar").classList.add("popup_opened")
-  }
-  const handleProfileClick = () => {
-    document.querySelector("#profile__popup").classList.add("popup_opened")
-  }
-  const handleAddPlaceClick = () => {
-    document.querySelector("#add_place").classList.add("popup_opened")
-  }
 
+  // to be united
   React.useEffect(() => {
     api.getInitialCards().then((data) => {
       setCards(data);
     });
   }, []);
-
-
-
-  //Пользователь
-  const [username, setUsername] = React.useState(["Test"])
-  const [avatar, setAvatar] = React.useState([""])
-  const [occupation, setOccupation] = React.useState(["Penguin uprighter"])
-
+// via api.getAlldata()
   React.useEffect(() => {
     api.getUserInfo().then((userData) => {
       setUsername(userData.name);
@@ -34,6 +19,13 @@ export default function Main(props) {
       setAvatar(userData.avatar);
     }).catch(err => console.log(err));
   }, []);
+
+  //Пользователь
+  const [username, setUsername] = React.useState(["Test"])
+  const [avatar, setAvatar] = React.useState([""])
+  const [occupation, setOccupation] = React.useState(["Penguin uprighter"])
+
+
 
 
 
@@ -106,7 +98,7 @@ export default function Main(props) {
 
 
       </section>
-      
+
 
       <div id="profile__popup" className="popup">
         <div className="popup__container">
