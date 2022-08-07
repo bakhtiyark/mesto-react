@@ -16,7 +16,7 @@ export default function Main(props) {
 
   React.useEffect(() => {
     api.getInitialCards().then((data) => {
-      setcards(data);
+      setCards(data);
     });
   }, []);
 
@@ -24,7 +24,7 @@ export default function Main(props) {
 
   //Пользователь
   const [username, setUsername] = React.useState(["Test"])
-  const [avatar, setAvatar] = React.useState([null])
+  const [avatar, setAvatar] = React.useState([""])
   const [occupation, setOccupation] = React.useState(["Penguin uprighter"])
 
   React.useEffect(() => {
@@ -36,11 +36,8 @@ export default function Main(props) {
   }, []);
 
 
-  //Карты
-  const [cards, setcards] = React.useState([])
-  function openCardPopup(card){
-    setcards({ src: card.link, alt: card.name, opened: true });
-  }
+
+  const [cards, setCards] = React.useState([])
 
   return (
     <main>
@@ -102,21 +99,14 @@ export default function Main(props) {
               name={card.name}
               likes={card.likes}
               card={card}
-              onCardClick={openCardPopup}
+              onCardClick={props.onCardClick}
             />
           );
         })}
 
 
       </section>
-      <div className="popup popup_open-card" id="open-card">
-        <div className="popup__image-container">
-          <button className="popup__close popup__close-icon popup__close-icon_position-place" id="image-close-button"
-            type="button" onClick={props.closePopups}></button>
-          <img className="popup__image" />
-          <p className="popup__place-name"></p>
-        </div>
-      </div>
+      
 
       <div id="profile__popup" className="popup">
         <div className="popup__container">

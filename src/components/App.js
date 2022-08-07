@@ -3,6 +3,7 @@ import Main from "./Main.js"
 import Footer from "./Footer.js"
 import React from "react";
 import PopupWithForm from "./PopupWithForm.js"
+import ImagePopup from "./ImagePopup.js";
 
 function App() {
   const [isAvatarPopupOpen, setAvatarPopupOpen] = React.useState(false)
@@ -25,9 +26,14 @@ function App() {
     setAvatarPopupOpen(false)
     setAddPlacePopupOpen(false)
     setProfilePopupOpen(false)
+    setSelectedCard(false)
     console.log("lala")
   }
-
+  //Карты
+  const [selectedCard, setSelectedCard] = React.useState([])
+  function openCardPopup(card) {
+    setSelectedCard({ src: card.link, alt: card.name, opened: true });
+  }
 
   return (
     <div className="page">
@@ -71,12 +77,12 @@ function App() {
         onClose={closePopups}
       >
         <>
-            <div className="popup__input-wrapper">
-              <input type="url" required className="popup__input popup__input_link" id="avatar-input"
-                name="link" placeholder="Ссылка на картинку" />
-              <span className="avatar-input-error"></span>
-            </div>
-            <button type="submit" className="popup__save-button">Сохранить</button>
+          <div className="popup__input-wrapper">
+            <input type="url" required className="popup__input popup__input_link" id="avatar-input"
+              name="link" placeholder="Ссылка на картинку" />
+            <span className="avatar-input-error"></span>
+          </div>
+          <button type="submit" className="popup__save-button">Сохранить</button>
 
         </>
       </PopupWithForm>
@@ -112,10 +118,10 @@ function App() {
       </PopupWithForm>
 
       <PopupWithForm
-        name="new-profile"
-        title="Редактировать профиль"
+        name="new-card"
+        title="Добавить место"
         buttonText="Сохранить"
-        isOpen={isProfilePopupOpen}
+        isOpen={isAddPlacePopupOpen}
         onClose={closePopups}
       >
         <>
@@ -146,7 +152,12 @@ function App() {
         addPlace={addPlace}
         openProfilePopup={openProfilePopup}
         closePopups={closePopups}
+        onCardClick={openCardPopup}
       />
+
+
+      <ImagePopup card={selectedCard} onClose={closePopups}></ImagePopup>
+
       <Footer />
 
       <script type="module" src="./pages/index.js"></script>
