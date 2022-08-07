@@ -1,55 +1,69 @@
 import React from "react"
 import { api } from "../utils/Api.js"
 import Card from "./Card.js"
-/*
-const handleEditAvatarClick = () => {
-  document.querySelector("#replace_avatar").classList.add("popup_opened")
-}
-const handleProfileClick = () => {
-  document.querySelector("#profile__popup").classList.add("popup_opened")
-}
-const handleAddPlaceClick = () => {
-  document.querySelector("#add_place").classList.add("popup_opened")
-}*/
 
+export default function Main(props) {
 
-function Main() {
+  const handleEditAvatarClick = () => {
+    document.querySelector("#replace_avatar").classList.add("popup_opened")
+  }
+  const handleProfileClick = () => {
+    document.querySelector("#profile__popup").classList.add("popup_opened")
+  }
+  const handleAddPlaceClick = () => {
+    document.querySelector("#add_place").classList.add("popup_opened")
+  }
+
   React.useEffect(() => {
     api.getInitialCards().then((data) => {
       setcards(data);
     });
   }, []);
 
+
+
   //Пользователь
   const [username, setUsername] = React.useState(["Test"])
   const [avatar, setAvatar] = React.useState([null])
   const [occupation, setOccupation] = React.useState(["Penguin uprighter"])
 
+  React.useEffect(() => {
+    api.getUserInfo().then((userData) => {
+      setUsername(userData.name);
+      setOccupation(userData.about);
+      setAvatar(userData.avatar);
+    }).catch(err => console.log(err));
+  }, []);
+
+
   //Карты
   const [cards, setcards] = React.useState([])
-
+  function openCardPopup(card){
+    setcards({ src: card.link, alt: card.name, opened: true });
+  }
 
   return (
     <main>
       <section className="profile">
         <div className="profile__card">
           <div className="profile__avatar-container">
-            <img className="profile__avatar" alt="Аватар" />
-            <button className="profile__avatar-replace" onClick={handleEditAvatarClick} type="button">
+            <img className="profile__avatar" src={avatar} alt="Аватар" />
+            <button className="profile__avatar-replace" onClick={props.replaceAvatar} type="button">
             </button>
           </div>
           <div className="profile__info">
-            <h1 className="profile__name"></h1>
-            <p className="profile__subtitle"></p>
+            <h1 className="profile__name">{username}</h1>
+            <p className="profile__subtitle">{occupation}</p>
           </div>
-          <button type="button" className="profile__button profile__button_edit" onClick={handleProfileClick}></button>
+          <button type="button" className="profile__button profile__button_edit" onClick={props.openProfilePopup}></button>
         </div>
-        <button type="button" className="profile__button profile__button_add" onClick={handleAddPlaceClick}></button>
+
+        <button type="button" className="profile__button profile__button_add" onClick={props.addPlace}></button>
 
         <div className="popup" id="add_place">
           <div className="popup__container">
             <button className="popup__close-icon popup__close" type="button" id="place-close-button"
-              name="place-close"></button>
+              name="place-close" onClick={props.closePopups}></button>
             <h2 className="popup__label">Новое место</h2>
             <form className="popup__form" id="place-add" name="place-add" method="get" noValidate>
               <div className="popup__input-wrapper">
@@ -69,7 +83,7 @@ function Main() {
         <div className="popup" id="confirm-delete">
           <div className="popup__container popup__container_delete">
             <button className="popup__close-icon popup__close" type="button" id="delete-close-button"
-              name="place-close"></button>
+              name="place-close" onClick={props.closePopups}></button>
             <h2 className="popup__label">Вы уверены?</h2>
             <form className="popup__form popup__form_delete-confirmation" id="place-delete" name="place-delete"
               method="get" noValidate>
@@ -78,13 +92,27 @@ function Main() {
           </div>
         </div>
       </section>
+
       <section className="elements">
+        {cards.map((card) => {
+          return (
+            <Card
+              key={card._id}
+              link={card.link}
+              name={card.name}
+              likes={card.likes}
+              card={card}
+              onCardClick={openCardPopup}
+            />
+          );
+        })}
+
 
       </section>
       <div className="popup popup_open-card" id="open-card">
         <div className="popup__image-container">
           <button className="popup__close popup__close-icon popup__close-icon_position-place" id="image-close-button"
-            type="button"></button>
+            type="button" onClick={props.closePopups}></button>
           <img className="popup__image" />
           <p className="popup__place-name"></p>
         </div>
@@ -102,14 +130,14 @@ function Main() {
             <span className="profile-secondary-input-error"></span>
             <button type="submit" className="popup__save-button">Сохранить</button>
           </form>
-          <button type="button" className="popup__close popup__close-icon" id="profile-close-button"></button>
+          <button type="button" className="popup__close popup__close-icon" id="profile-close-button" onClick={props.closePopups}></button>
         </div>
       </div>
 
       <div className="popup replace_avatar" id="replace_avatar">
         <div className="popup__container popup__container_avatar">
           <button className="popup__close-icon popup__close" type="button" id="avatar-close-button"
-            name="avatar-close"></button>
+            name="avatar-close" onClick={props.closePopups}></button>
           <h2 className="popup__label">Обновить Аватар</h2>
           <form className="popup__form" id="avatar-add" name="avatar-add" method="get" noValidate>
             <div className="popup__input-wrapper">
@@ -124,5 +152,5 @@ function Main() {
 
     </main>
   )
-}
-export default Main;
+};
+
