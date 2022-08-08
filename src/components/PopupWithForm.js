@@ -3,7 +3,7 @@ function PopupWithForm(props) {
 
     return (
         <div className={className}>
-            <div className="popup__container">
+            <div className={`popup__container ${props.modifier !== undefined ? props.modifier : ""}`}>
                 <button type="button" onClick={props.onClose} className="popup__close popup__close-icon" id="profile-close-button"></button>
                 <h2 className="popup__title">{props.title}</h2>
                 <form className="popup__form" name={props.name} noValidate>

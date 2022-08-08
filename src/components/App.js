@@ -51,6 +51,7 @@ function App() {
             type="text"
             id="firstname"
             name="name"
+            placeholder="Имя"
             maxLength="40"
             className="popup__input popup__input_profile_name"
             required
@@ -62,6 +63,7 @@ function App() {
             id="profession"
             name="about"
             maxLength="200"
+            placeholder="Род занятии"
             className="popup__input popup__input_profile_secondary"
             required
           />
@@ -74,9 +76,10 @@ function App() {
         title="Обновить аватар"
         buttonText="Сохранить"
         isOpen={isAvatarPopupOpen}
+        modifier= "popup__container_avatar"
         onClose={closePopups}
+        placeholder="Ссылка на картинку"
       >
-        <>
           <div className="popup__input-wrapper">
             <input type="url" required className="popup__input popup__input_link" id="avatar-input"
               name="link" placeholder="Ссылка на картинку" />
@@ -84,37 +87,6 @@ function App() {
           </div>
           <button type="submit" className="popup__save-button">Сохранить</button>
 
-        </>
-      </PopupWithForm>
-
-      <PopupWithForm
-        name="new-profile"
-        title="Редактировать профиль"
-        buttonText="Сохранить"
-        isOpen={isProfilePopupOpen}
-        onClose={closePopups}
-      >
-        <>
-          <input
-            type="text"
-            id="firstname"
-            name="name"
-            maxLength="40"
-            className="popup__input popup__input_profile_name"
-            required
-          />
-          <span className="profile-name-input-error"></span>
-
-          <input
-            type="text"
-            id="profession"
-            name="about"
-            maxLength="200"
-            className="popup__input popup__input_profile_secondary"
-            required
-          />
-          <span className="profile-secondary-input-error"></span>
-        </>
       </PopupWithForm>
 
       <PopupWithForm
