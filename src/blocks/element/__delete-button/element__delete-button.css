@@ -23,6 +23,7 @@
 }
 @media screen and (max-width: 767px) {
     .element__delete-button {
-        top: 0;
+        top: 15px;
+        right:10px;
     }
 }

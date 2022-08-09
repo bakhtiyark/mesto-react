@@ -99,21 +99,23 @@ function App() {
         <>
           <input
             type="text"
-            id="firstname"
+            id="location"
             name="name"
             maxLength="40"
             className="popup__input popup__input_profile_name"
             required
+            placeholder="Название места"
           />
           <span className="profile-name-input-error"></span>
 
           <input
             type="text"
-            id="profession"
-            name="about"
+            id="link"
+            name="link"
             maxLength="200"
             className="popup__input popup__input_profile_secondary"
             required
+            placeholder="Ссылка на картинку"
           />
           <span className="profile-secondary-input-error"></span>
         </>
