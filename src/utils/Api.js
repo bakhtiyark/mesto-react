@@ -13,7 +13,7 @@ export class Api {
   }
 
   //Получение всех данных
-  getAllData(){
+  getAllData() {
     return Promise.all([this.getInitialCards(), this.getUserInfo()])
   }
 
@@ -46,7 +46,7 @@ export class Api {
     })
       .then(res => this._errorCheck(res));
   }
-  
+
   //Обновление пользователя
   setUserInfo(name, about) {
     return fetch(`${this._url}/users/me`,
@@ -99,7 +99,7 @@ export class Api {
 }
 
 export const api = new Api({
-  baseUrl:'https://mesto.nomoreparties.co/v1/cohort-45',
+  baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-45',
   token: {
     authorization: "c4df37c2-ee37-468d-b548-ff18699e058a",
     'Content-Type': 'application/json'

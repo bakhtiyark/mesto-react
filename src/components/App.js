@@ -6,10 +6,13 @@ import PopupWithForm from "./PopupWithForm.js"
 import ImagePopup from "./ImagePopup.js";
 
 function App() {
+
+  //Стейты
   const [isAvatarPopupOpen, setAvatarPopupOpen] = React.useState(false)
   const [isAddPlacePopupOpen, setAddPlacePopupOpen] = React.useState(false)
   const [isProfilePopupOpen, setProfilePopupOpen] = React.useState(false)
 
+  // Открытие соответствующих попапов
   function replaceAvatar() {
     setAvatarPopupOpen(true)
   }
@@ -21,6 +24,8 @@ function App() {
   function openProfilePopup() {
     setProfilePopupOpen(true)
   }
+
+  //Закрытие Попапов
 
   function closePopups() {
     setAvatarPopupOpen(false)
@@ -76,16 +81,16 @@ function App() {
         title="Обновить аватар"
         buttonText="Сохранить"
         isOpen={isAvatarPopupOpen}
-        modifier= "popup__container_avatar"
+        modifier="popup__container_avatar"
         onClose={closePopups}
         placeholder="Ссылка на картинку"
       >
-          <div className="popup__input-wrapper">
-            <input type="url" required className="popup__input popup__input_link" id="avatar-input"
-              name="link" placeholder="Ссылка на картинку" />
-            <span className="avatar-input-error"></span>
-          </div>
-          <button type="submit" className="popup__save-button">Сохранить</button>
+        <div className="popup__input-wrapper">
+          <input type="url" required className="popup__input popup__input_link" id="avatar-input"
+            name="link" placeholder="Ссылка на картинку" />
+          <span className="avatar-input-error"></span>
+        </div>
+        <button type="submit" className="popup__save-button">Сохранить</button>
 
       </PopupWithForm>
 

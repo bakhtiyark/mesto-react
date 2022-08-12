@@ -4,7 +4,7 @@ import Card from "./Card.js"
 
 export default function Main(props) {
 
-// Получение данных с сервера
+  // Получение данных с сервера
   React.useEffect(() => {
     api.getAllData().then(([cards, userData]) => {
       setUsername(userData.name);
@@ -23,7 +23,7 @@ export default function Main(props) {
   return (
     <main>
 
-      
+
       <section className="profile">
         <div className="profile__card">
           <div className="profile__avatar-container">
@@ -39,7 +39,7 @@ export default function Main(props) {
         </div>
 
         <button type="button" className="profile__button profile__button_add" onClick={props.addPlace}></button>
-        
+
 
       </section>
       <section className="elements">

@@ -1,10 +1,12 @@
 function Card(props) {
+
+    //Обработчик клика
     function handleCardClick() {
         return props.onCardClick(props.card)
     }
     return (
         <article className="element">
-            <img className="element__image" src={props.link} alt={props.name} onClick ={handleCardClick} />
+            <img className="element__image" src={props.link} alt={props.name} onClick={handleCardClick} />
             <div className="element__card">
                 <h2 className="element__title">{props.name}</h2>
                 <div className="like-compartment">
