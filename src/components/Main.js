@@ -9,8 +9,6 @@ export default function Main(props) {
 
   return (
     <main>
-
-
       <section className="profile">
         <div className="profile__card">
           <div className="profile__avatar-container">

@@ -48,14 +48,14 @@ export class Api {
   }
 
   //Обновление пользователя
-  setUserInfo(name, about) {
+  setUserInfo(data) {
     return fetch(`${this._url}/users/me`,
       {
         method: 'PATCH',
         headers: this._token,
         body: JSON.stringify({
-          name: name,
-          about: about
+          name: data.name,
+          about: data.about
         })
       }).then(res => this._errorCheck(res))
   }
@@ -65,9 +65,7 @@ export class Api {
       {
         method: 'PATCH',
         headers: this._token,
-        body: JSON.stringify({
-          avatar: link
-        })
+        body: JSON.stringify(link)
       }).then(res => this._errorCheck(res))
   }
 
