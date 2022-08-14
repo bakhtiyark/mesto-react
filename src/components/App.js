@@ -2,12 +2,12 @@ import Header from "./Header.js"
 import Main from "./Main.js"
 import Footer from "./Footer.js"
 import React from "react";
-import PopupWithForm from "./PopupWithForm.js"
 import ImagePopup from "./ImagePopup.js";
 import { api } from "../utils/Api.js";
 import { CurrentUserContext } from "../contexts/CurrentUserContext.js";
 import EditProfilePopup from "./EditProfilePopup.js";
 import EditAvatarPopup from "./EditAvatarPopup.js";
+import AddPlacePopup from "./AddPlacePopup.js";
 
 function App() {
 
@@ -18,14 +18,18 @@ function App() {
   React.useEffect(() => {
     api.getUserInfo().then((data) => {
       setCurrentUser(data);
+    }).catch((err) => {
+      console.log(err);
     });
   }, []);
 
 
   React.useEffect(() => {
     api.getInitialCards().then((res) => {
-      console.dir(res)
+      //console.dir(res)
       setCards(res)
+    }).catch((err) => {
+      console.log(err);
     })
   }, [])
 
@@ -55,7 +59,7 @@ function App() {
     setAddPlacePopupOpen(false)
     setProfilePopupOpen(false)
     setSelectedCard({})
-    console.log("lala")
+    //console.log("lala")
   }
   //Карты
   const [selectedCard, setSelectedCard] = React.useState({})
@@ -67,6 +71,8 @@ function App() {
   function handleUpdateUser(data) {
     api.setUserInfo(data).then((data) => {
       setCurrentUser(data)
+    }).catch((err) => {
+      console.log(err);
     });
     closePopups();
   }
@@ -75,6 +81,8 @@ function App() {
   function handleAvatarUpdate(data) {
     api.setUserAvatar(data).then((link) => {
       setCurrentUser(link)
+    }).catch((err) => {
+      console.log(err);
     });
     closePopups();
   }
@@ -102,6 +110,15 @@ function App() {
       });
   }
 
+  // AddPlace
+  function handleAddPlaceSubmit(data) {
+    api.createCard(data).then((newCard) => {
+      setCards([newCard, ...cards]);
+      closePopups();
+    }).catch((err) => {
+      console.log(err);
+    })
+  }
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
@@ -109,39 +126,7 @@ function App() {
         <Header />
         <EditProfilePopup isOpen={isProfilePopupOpen} onClose={closePopups} onUpdateUser={handleUpdateUser} />
         <EditAvatarPopup isOpen={isAvatarPopupOpen} onClose={closePopups} onUpdateAvatar={handleAvatarUpdate} />
-
-
-        <PopupWithForm
-          name="new-card"
-          title="Добавить место"
-          buttonText="Сохранить"
-          isOpen={isAddPlacePopupOpen}
-          onClose={closePopups}
-        >
-          <>
-            <input
-              type="text"
-              id="location"
-              name="name"
-              maxLength="40"
-              className="popup__input popup__input_profile_name"
-              required
-              placeholder="Название места"
-            />
-            <span className="profile-name-input-error"></span>
-
-            <input
-              type="text"
-              id="link"
-              name="link"
-              maxLength="200"
-              className="popup__input popup__input_profile_secondary"
-              required
-              placeholder="Ссылка на картинку"
-            />
-            <span className="profile-secondary-input-error"></span>
-          </>
-        </PopupWithForm>
+        <AddPlacePopup isOpen={isAddPlacePopupOpen} onClose={closePopups} onSubmitPlace={handleAddPlaceSubmit} />
 
         <Main
           replaceAvatar={replaceAvatar}

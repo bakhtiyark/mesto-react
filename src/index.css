@@ -22,6 +22,9 @@
 @import url(./blocks/profile/__button/_add/profile__button_add.css);
 @import url(./blocks/profile/__button/_edit/profile__button_edit.css);
 
+@import url(./blocks/element/__delete-button/_visible/element__delete-button_visible.css);
+@import url(./blocks/element/__delete-button/_hidden/element__delete-button_hidden.css);
+
 @import url(./blocks/popup/popup.css);
 @import url(./blocks/popup/__close-icon/popup__close-icon.css);
 @import url(./blocks/popup/__container/popup__container.css);
