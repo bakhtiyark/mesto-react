@@ -22,3 +22,6 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 src/components/Trash.js
+src/contexts/TranslationContext.js
+src/components/LangSelect.js
+src/blocks/header/__language-dd/header__language-dd.css

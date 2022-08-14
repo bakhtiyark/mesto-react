@@ -71,22 +71,13 @@ export class Api {
       }).then(res => this._errorCheck(res))
   }
 
-  //Лайканье
-  addLike(id) {
+  //Комбинированный метод для лайканья/снятия лайка
+  changeLikeCardStatus(id, state){
     return fetch(`${this._url}/cards/${id}/likes`,
-      {
-        method: 'PUT',
-        headers: this._token
-      }).then(res => this._errorCheck(res))
-  }
-
-  //Снятие ранее поставленного лайка
-  removeLike(id) {
-    return fetch(`${this._url}/cards/${id}/likes`,
-      {
-        method: 'DELETE',
-        headers: this._token
-      }).then(res => this._errorCheck(res))
+    {
+      method: (state) ? "PUT" :'DELETE',
+      headers: this._token
+    }).then(res => this._errorCheck(res))
   }
 
   //Удаление карточки
