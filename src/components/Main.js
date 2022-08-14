@@ -1,11 +1,10 @@
-import React from "react"
+import { useContext } from 'react';
 import Card from "./Card.js"
 import { CurrentUserContext } from "../contexts/CurrentUserContext.js"
 
 export default function Main(props) {
 
-  const currentUser = React.useContext(CurrentUserContext)
-
+  const currentUser = useContext(CurrentUserContext)
 
   return (
     <main>
@@ -25,7 +24,6 @@ export default function Main(props) {
 
         <button type="button" className="profile__button profile__button_add" onClick={props.addPlace}></button>
 
-
       </section>
       <section className="elements">
         {props.cards.map((card) => {
@@ -43,8 +41,6 @@ export default function Main(props) {
             />
           );
         })}
-
-
       </section>
     </main>
   )

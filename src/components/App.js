@@ -1,7 +1,7 @@
 import Header from "./Header.js"
 import Main from "./Main.js"
 import Footer from "./Footer.js"
-import React from "react";
+import {useEffect, useState} from 'react';
 import ImagePopup from "./ImagePopup.js";
 import { api } from "../utils/Api.js";
 import { CurrentUserContext } from "../contexts/CurrentUserContext.js";
@@ -12,10 +12,20 @@ import AddPlacePopup from "./AddPlacePopup.js";
 function App() {
 
   //Данные о пользователе
+  const [currentUser, setCurrentUser] = useState({});
 
-  const [currentUser, setCurrentUser] = React.useState({});
+  //Карты
+  const [cards, setCards] = useState([]);
+  
+  //Раскрытая карта
+  const [selectedCard, setSelectedCard] = useState({})
 
-  React.useEffect(() => {
+  //Стейты попапов
+  const [isAvatarPopupOpen, setAvatarPopupOpen] = useState(false)
+  const [isAddPlacePopupOpen, setAddPlacePopupOpen] = useState(false)
+  const [isProfilePopupOpen, setProfilePopupOpen] = useState(false)
+
+  useEffect(() => {
     api.getUserInfo().then((data) => {
       setCurrentUser(data);
     }).catch((err) => {
@@ -24,7 +34,7 @@ function App() {
   }, []);
 
 
-  React.useEffect(() => {
+  useEffect(() => {
     api.getInitialCards().then((res) => {
       //console.dir(res)
       setCards(res)
@@ -33,11 +43,6 @@ function App() {
     })
   }, [])
 
-  const [cards, setCards] = React.useState([]);
-  //Стейты
-  const [isAvatarPopupOpen, setAvatarPopupOpen] = React.useState(false)
-  const [isAddPlacePopupOpen, setAddPlacePopupOpen] = React.useState(false)
-  const [isProfilePopupOpen, setProfilePopupOpen] = React.useState(false)
 
   // Открытие соответствующих попапов
   function replaceAvatar() {
@@ -61,8 +66,6 @@ function App() {
     setSelectedCard({})
     //console.log("lala")
   }
-  //Карты
-  const [selectedCard, setSelectedCard] = React.useState({})
   function openCardPopup(card) {
     setSelectedCard({ src: card.link, alt: card.name, opened: true });
   }
@@ -96,6 +99,8 @@ function App() {
     // Отправляем запрос в API и получаем обновлённые данные карточки
     api.changeLikeCardStatus(card._id, !isLiked).then((newCard) => {
       setCards((state) => state.map((c) => c._id === card._id ? newCard : c));
+    }).catch((err) => {
+      console.log(err);
     });
   }
   // Удаление карты
@@ -110,7 +115,7 @@ function App() {
       });
   }
 
-  // AddPlace
+  // Добавление места
   function handleAddPlaceSubmit(data) {
     api.createCard(data).then((newCard) => {
       setCards([newCard, ...cards]);
@@ -137,10 +142,7 @@ function App() {
           cards={cards}
           onCardLike={handleCardLike}
           onCardDelete={handleCardDelete}
-
-
         />
-
 
         <ImagePopup card={selectedCard} onClose={closePopups}></ImagePopup>
 
@@ -148,8 +150,6 @@ function App() {
 
         <script type="module" src="./pages/index.js"></script>
       </div>
-
-
     </CurrentUserContext.Provider>);
 }
 
