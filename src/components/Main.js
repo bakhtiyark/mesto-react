@@ -1,26 +1,11 @@
 import React from "react"
-import { api } from "../utils/Api.js"
 import Card from "./Card.js"
+import { CurrentUserContext } from "../contexts/CurrentUserContext.js"
 
 export default function Main(props) {
 
-  // Получение данных с сервера
-  React.useEffect(() => {
-    api.getAllData().then(([cards, userData]) => {
-      setUsername(userData.name);
-      setOccupation(userData.about);
-      setAvatar(userData.avatar);
-      setCards(cards);
-    }).catch(err => console.log(err))
-  }, []);
+  const currentUser = React.useContext(CurrentUserContext)
 
-  //Пользователь
-  const [username, setUsername] = React.useState(["Test"])
-  const [avatar, setAvatar] = React.useState([""])
-  const [occupation, setOccupation] = React.useState(["Penguin uprighter"])
-
-  
-  const [cards, setCards] = React.useState([])
 
   return (
     <main>
@@ -29,13 +14,13 @@ export default function Main(props) {
       <section className="profile">
         <div className="profile__card">
           <div className="profile__avatar-container">
-            <img className="profile__avatar" src={avatar} alt="Аватар" />
+            <img className="profile__avatar" src={currentUser.avatar} alt="Аватар" />
             <button className="profile__avatar-replace" onClick={props.replaceAvatar} type="button">
             </button>
           </div>
           <div className="profile__info">
-            <h1 className="profile__name">{username}</h1>
-            <p className="profile__subtitle">{occupation}</p>
+            <h1 className="profile__name">{currentUser.name}</h1>
+            <p className="profile__subtitle">{currentUser.about}</p>
           </div>
           <button type="button" className="profile__button profile__button_edit" onClick={props.openProfilePopup}></button>
         </div>
@@ -45,7 +30,7 @@ export default function Main(props) {
 
       </section>
       <section className="elements">
-        {cards.map((card) => {
+        {props.cards.map((card) => {
           return (
             <Card
               key={card._id}
@@ -54,6 +39,9 @@ export default function Main(props) {
               likes={card.likes}
               card={card}
               onCardClick={props.onCardClick}
+              ownerId={card.owner._id}
+              onCardLike={props.onCardLike}
+              onCardDelete={props.onCardDelete}
             />
           );
         })}
