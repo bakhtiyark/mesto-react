@@ -18,6 +18,8 @@ export default function Main(props) {
   const [username, setUsername] = React.useState(["Test"])
   const [avatar, setAvatar] = React.useState([""])
   const [occupation, setOccupation] = React.useState(["Penguin uprighter"])
+
+  
   const [cards, setCards] = React.useState([])
 
   return (

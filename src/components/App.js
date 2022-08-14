@@ -4,8 +4,19 @@ import Footer from "./Footer.js"
 import React from "react";
 import PopupWithForm from "./PopupWithForm.js"
 import ImagePopup from "./ImagePopup.js";
+import { api } from "../utils/Api.js";
 
 function App() {
+
+  //Данные о пользователе
+
+  const [currentUser, setCurrentUser] = React.useEffect({});
+
+  React.useEffect(() => {
+    api.getUserInfo.then((data) =>{
+      setCurrentUser({data})
+    })
+  }, []);
 
   //Стейты
   const [isAvatarPopupOpen, setAvatarPopupOpen] = React.useState(false)
